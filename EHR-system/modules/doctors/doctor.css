@@ -1,0 +1,108 @@
+/* Card hover effects */
+.hover-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Avatar styles */
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1rem;
+}
+
+/* Status badge styles */
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.8em;
+}
+
+/* Table styles */
+.table > :not(caption) > * > * {
+    padding: 1rem;
+}
+
+/* Search input styles */
+.input-group .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: none;
+}
+
+/* Action buttons styles */
+.btn-group .btn {
+    padding: 0.25rem 0.5rem;
+}
+
+.btn-group .btn i {
+    width: 16px;
+    text-align: center;
+}
+
+/* Modal styles */
+.modal-content {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Card header styles */
+.card-header {
+    padding: 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Quick action cards */
+.quick-action-card {
+    border: none;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.quick-action-card:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-5px);
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .table-responsive {
+        border: 0;
+    }
+    
+    .table thead {
+        display: none;
+    }
+    
+    .table tr {
+        margin-bottom: 1rem;
+        display: block;
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+    }
+    
+    .table td {
+        display: block;
+        text-align: right;
+        padding: 0.75rem;
+        border: none;
+    }
+    
+    .table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+}

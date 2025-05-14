@@ -1,0 +1,109 @@
+patients
+
+CREATE TABLE patients (
+    id INT AUTO_INCREMENT PRIMARY KEY,             -- Unique ID for each record
+    patient_id VARCHAR(50) NOT NULL UNIQUE,        -- Unique patient identifier
+    first_name VARCHAR(100) NOT NULL,              -- First name of the patient
+    last_name VARCHAR(100) NOT NULL,               -- Last name of the patient
+    date_of_birth DATE NOT NULL,                   -- Date of birth
+    phone VARCHAR(15),                             -- Phone number
+    email VARCHAR(150) UNIQUE,                     -- Email address
+    address TEXT,                                  -- Patient address
+    status ENUM('Active', 'Inactive') DEFAULT 'Active', -- Patient status
+    last_visit_date DATE,                          -- Date of last visit
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Timestamp for record creation
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Timestamp for updates
+);
+
+
+
+Appointments
+
+CREATE TABLE appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    purpose VARCHAR(255) NOT NULL,
+    status ENUM('Scheduled', 'Completed', 'Cancelled', 'No Show') DEFAULT 'Scheduled',
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE,
+    FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE CASCADE
+);
+
+
+
+billing 
+
+CREATE TABLE bills (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Unique identifier for the bill
+    bill_number VARCHAR(20) NOT NULL UNIQUE, -- Unique bill number
+    patient_id INT NOT NULL, -- References the patient who is billed
+    bill_date DATE NOT NULL, -- Date when the bill was generated
+    total_amount DECIMAL(10, 2) NOT NULL, -- Total amount to be paid
+    status ENUM('Paid', 'Pending', 'Overdue') DEFAULT 'Pending', -- Status of the bill
+    due_date DATE NOT NULL, -- Due date for the payment
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Record creation timestamp
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Record update timestamp
+    FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE -- Links to the patients table
+);
+
+
+doctors
+
+CREATE TABLE doctors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    specialization VARCHAR(100) NOT NULL,
+    address TEXT NOT NULL,
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+Specializations:
+CREATE TABLE specializations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+Reports
+
+
+CREATE TABLE reports (
+    report_id INT AUTO_INCREMENT PRIMARY KEY, -- Unique identifier for each report
+    report_name VARCHAR(255) NOT NULL,        -- Name of the report
+    report_type ENUM('patient', 'appointment', 'financial') NOT NULL, -- Type of the report
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp of when the report was created
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Timestamp for updates
+    content TEXT NOT NULL                     -- JSON or serialized content of the report (optional)
+);
+
+
+MEdical records:
+CREATE TABLE IF NOT EXISTS medical_records (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    diagnosis TEXT NOT NULL,
+    treatment TEXT NOT NULL,
+    notes TEXT,
+    status ENUM('Pending', 'Completed', 'Cancelled') DEFAULT 'Pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (patient_id) REFERENCES patients(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctors(id)
+);
+
+
