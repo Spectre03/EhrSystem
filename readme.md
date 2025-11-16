@@ -205,10 +205,10 @@ POST /api/patients
 
 ## 📷 Screenshots
 
-_Add screenshots to `/docs/screenshots/` and show them here with Markdown image tags._
+
 
 ```
-![Dashboard](/docs/screenshots/dashboard.png)
+![EhrSystem](1.png)
 ```
 
 ---
